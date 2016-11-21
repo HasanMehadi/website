@@ -18,7 +18,6 @@ def index(request):
 
 
 def Details(request, album_id):
-
     << << << < HEAD
     album = get_object_or_404(Album, pk=album_id)
     return render(request, 'music/detail.html', {'album': album})
