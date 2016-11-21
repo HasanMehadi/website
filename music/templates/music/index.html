@@ -1,5 +1,9 @@
 <ul>
     {% for album in all_albums %}
+        <<<<<<< HEAD
         <li><a href="{% url 'music:Details' album.id %} ">{{ album.album_title }}</a></li>
+        =======
+        <li><a href="/music/{{ album.id }}">{{ album.album_title }}</a></li>
+        >>>>>>> origin/master
     {% endfor %}
 </ul>
