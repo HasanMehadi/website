@@ -1,8 +1,6 @@
-<< << << < HEAD
+"""
 from django.shortcuts import render, get_object_or_404
-== == == =
 from django.shortcuts import render
->> >> >> > origin / master
 from django.http import HttpResponse
 from .models import Album, Song
 from django.template import loader
@@ -18,7 +16,6 @@ def index(request):
 
 
 def Details(request, album_id):
-    << << << < HEAD
     album = get_object_or_404(Album, pk=album_id)
     return render(request, 'music/detail.html', {'album': album})
 
@@ -34,8 +31,26 @@ def favourite(request, album_id):
         selected_song.save()
         return render(request, 'music/detail.html', {'album': album})
 
-== == == =
-album = Album.objects.get(pk=album_id)
-context = {'album': album}
-return render(request, 'music/detail.html', context)
->> >> >> > origin / master
+"""
+
+from django.views import generic
+from .models import Album
+from django.views.generic.edit import CreateView
+
+
+class IndexView(generic.ListView):
+    # context_object_name = 'object_list'
+    template_name = 'music/index.html'
+
+    def get_queryset(self):
+       return Album.objects.all()
+
+
+class DetailView(generic.DetailView):
+    model = Album
+    template_name = 'music/detail.html'
+
+
+class AlbumCreate(CreateView):
+    model = Album
+    fields = ['artist', 'album_title', 'genre', 'album_logo', 'is_favorite']
